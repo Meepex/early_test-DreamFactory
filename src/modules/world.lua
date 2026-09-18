@@ -20,8 +20,27 @@ function world_table:save_world()
     WORLD_SAVER.add_magic_number(self.saverBuffer)
     WORLD_SAVER.add_header(self.saverBuffer, 1, 0, 0)
 
+    local jumping = false
+    local jumped_over = 0
+    local lastBlock = nil
     for i = 1, #self.worldData do
-        WORLD_SAVER.add_block(self.saverBuffer, current)
+        local block, futureBlock = self.worldData[i], self.worldData[1+i]
+
+        if jumping then
+            if block:get_id() ~= futureBlock:get_id() or block:get_facing() ~= futureBlock:get_facing() then
+                jumping = false
+                WORLD_SAVER.add_jump(self.saverBuffer, jumped_over)
+                WORLD_SAVER.add_block(self.saverBuffer, block)
+            else
+                jumped_over = jumped_over+1
+            end
+        else
+            if block:get_id() == futureBlock:get_id() and block:get_facing() == futureBlock:get_facing() then
+                jumping = true
+                lastBlock = block
+                WORLD_SAVER.add_block(self.saverBuffer, block)
+            end
+        end
     end
 
     WORLD_SAVER.write_file("build/worldData/test.bin", self.saverBuffer)

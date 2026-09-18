@@ -11,7 +11,7 @@ function player_table.init(camera)
 end
 
 function player_table:update(game_table, dt)
-    
+    game_table.renderer:add_to_2Drender_queue("player", {type = "fps"})
 end
 
 return(player_table)

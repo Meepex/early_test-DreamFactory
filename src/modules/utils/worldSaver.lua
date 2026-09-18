@@ -97,35 +97,35 @@ end
 
 function saver.add_block(buffer, block)
     --block identifier--
-    writer.append_u8(buffer, 0x00)
+    writer.append_u8(buffer, 0x01)
     --ID--
-    writer.append_u16(buffer, block.id)
+    writer.append_u16(buffer, block:get_id())
     --facing (eg. 1 = north, 2 = west, ect.)--
-    writer.append_u8(buffer, block.facing)
+    writer.append_u8(buffer, block:get_facing())
 end
 
 --[[
 Basically an idea of jumping in saving, we will have for example:
 
-    (0x00 is a identifier that it is a block) 
+    (0x01 is a identifier that it is a block) 
     
-    0x00[ID: 2, Facing: 1(north)] 
+    0x01[ID: 2, Facing: 1(north)] 
 
 and there will be for example 5 more of the same blocks facing the same way with the same ID
 so we will add the block.
 
-    0x00[ID: 2, Facing: 1]
+    0x01[ID: 2, Facing: 1]
 
-and now we add the jump which has as an identifier 0x01
+and now we add the jump which has as an identifier 0x02
 
-    0x00[ID: 2, Facing: 1] 0x01[howMany: 5]
+    0x01[ID: 2, Facing: 1] 0x02[howMany: 5]
 
 the block we saved first is counted as 1 and then 5 additional blocks will be "added", this is to save space if we have an early
 build that doesn't have caves for example and ores yet, we will be saving hundreds of the same blocks, so we will just jump over them.
 ]]--
 function saver.add_jump(buffer, howMany)
     --jump identifier--
-    writer.append_u8(buffer, 0x01)
+    writer.append_u8(buffer, 0x02)
     --number of how many skips--
     writer.append_u16(buffer, howMany)
 end

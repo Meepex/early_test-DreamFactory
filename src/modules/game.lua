@@ -31,7 +31,7 @@ end
 function update_game(localGameTable, dt)
     localGameTable.world:update(localGameTable,    dt)
     localGameTable.player:update(localGameTable,   dt)
-    localGameTable.renderer:update(localGameTable, dt)
+--  localGameTable.renderer:update(localGameTable, dt)
 end
 
 function render_game(localGameTable, alpha)

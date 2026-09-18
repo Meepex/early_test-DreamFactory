@@ -3,7 +3,8 @@ local GAME   = require("src.modules.game")
 
 function main()
     rl.SetWindowState(rl.FLAG_MSAA_4X_HINT)
-    rl.InitWindow(800, 600, "Testing")
+    rl.InitWindow(800, 600, "test")
+    rl.SetWindowTitle("Dream_Factory")
     rl.SetTargetFPS(60)
 
     local camera = RAYLIB.Camera3D()
