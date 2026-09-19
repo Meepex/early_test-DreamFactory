@@ -4,13 +4,13 @@ local renderer_request = {}
 renderer_request["a3D"] = {}
 renderer_request["a2D"] = {}
 
-function renderer_request.a3D.find_and_run(tasker, data, self)
+function renderer_request.a3D.find_and_run(tasker, data, rendererContext)
     if tasker == "world" then
         if data.type == "testing_place" then
-            self.raylib.DrawCube(self.raylib.Vector3({0,0,0}), 2.0, 2.0, 2.0, self.raylib.RED);
-            self.raylib.DrawCubeWires(self.raylib.Vector3({0,0,0}), 2.0, 2.0, 2.0, self.raylib.MAROON);
+            rendererContext.raylib.DrawCube(rendererContext.raylib.Vector3({0,0,0}), 2.0, 2.0, 2.0, rendererContext.raylib.RED);
+            rendererContext.raylib.DrawCubeWires(rendererContext.raylib.Vector3({0,0,0}), 2.0, 2.0, 2.0, rendererContext.raylib.MAROON);
 
-            self.raylib.DrawGrid(10, 1.0);
+            rendererContext.raylib.DrawGrid(10, 1.0);
 
             return true
         end
@@ -20,10 +20,10 @@ function renderer_request.a3D.find_and_run(tasker, data, self)
     return false
 end
 
-function renderer_request.a2D.find_and_run(tasker, data, self)
+function renderer_request.a2D.find_and_run(tasker, data, rendererContext)
     if tasker == "player" then
         if data.type == "fps" then
-            self.raylib.DrawFPS(10, 10)
+            rendererContext.raylib.DrawFPS(10, 10)
             return true
         end
     end

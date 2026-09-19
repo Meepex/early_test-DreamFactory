@@ -2,9 +2,18 @@ local RAYLIB = require("src.modules.thirdparty.raylib")
 local GAME   = require("src.modules.game")
 
 function main()
+    local screenWidth, screenHeight = rl.GetScreenWidth(), rl.GetScreenHeight()
+
     rl.SetWindowState(rl.FLAG_MSAA_4X_HINT)
     rl.InitWindow(800, 600, "test")
     rl.SetWindowTitle("Dream_Factory")
+    
+    local image = rl.LoadImage("src\\assets\\icon\\window_icon.png")
+    if image then
+        rl.SetWindowIcon(image)
+        rl.UnloadImage(image)
+    end
+
     rl.SetTargetFPS(60)
 
     local camera = RAYLIB.Camera3D()
