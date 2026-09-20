@@ -14,6 +14,14 @@ function world_table.init()
     return(meta)
 end
 
+local function request_block(game_table, pos)
+    game_table.renderer:add_to_3Drender_queue("world", {
+        type = "block", 
+        position = game_table.raylib.Vector3(pos),
+        size = game_table.raylib.Vector3({1, 1, 1})
+    })
+end
+
 function world_table:save_world()
     --EXPERIMENTAL.TODO("Implement converting world data to bytes")
 
@@ -48,6 +56,14 @@ end
 
 function world_table:update(game_table, dt)
     game_table.renderer:add_to_3Drender_queue("world", {type = "testing_place"})
+
+    for y = 1, 10, 1 do
+        for x = -5, 5, 1 do
+            for z = -5, 5, 1 do
+                request_block(game_table, {x, y, z})
+            end
+        end
+    end
 end
 
 return(world_table)

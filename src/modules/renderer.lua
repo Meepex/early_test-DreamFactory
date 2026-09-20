@@ -11,7 +11,7 @@ function renderer_table.init(game_table, camera)
     meta.camera = camera
     meta.render_3Dqueue = {}
     meta.render_2Dqueue = {}
-    meta.raylib = game_table.raylib
+    meta.table = game_table
 
     return(meta)
 end
@@ -37,12 +37,16 @@ function renderer_table:add_to_2Drender_queue(tasker, task_data)
 end
 
 function renderer_table:render(dt)
-    self.raylib.BeginDrawing()
+    self.table.raylib.BeginDrawing()
     do
-        self.raylib.ClearBackground(self.raylib.RAYWHITE)
-        self.raylib.UpdateCamera(self.camera, 1); --CAMERA_FREE
+        self.table.raylib.ClearBackground(self.table.raylib.RAYWHITE)
+        if self.table.game_state == "World" then
+            self.table.raylib.UpdateCamera(self.camera, 3); --CAMERA_FIRST_PERSON
+        else
+            self.table.raylib.UpdateCamera(self.camera, 1); --CAMERA_FREE
+        end
 
-        self.raylib.BeginMode3D(self.camera);
+        self.table.raylib.BeginMode3D(self.camera);
         do
             for key=1, #self.render_3Dqueue do
                 local render_data  = self.render_3Dqueue[key]
@@ -53,7 +57,7 @@ function renderer_table:render(dt)
                 RENDERER_REQUESTS["a3D"].find_and_run(tasker, data, self)
             end
         end
-        self.raylib.EndMode3D();
+        self.table.raylib.EndMode3D();
 
         do
             for key=1, #self.render_2Dqueue do
@@ -66,7 +70,7 @@ function renderer_table:render(dt)
             end
         end
     end
-    self.raylib.EndDrawing()
+    self.table.raylib.EndDrawing()
 end
 
 return(renderer_table)

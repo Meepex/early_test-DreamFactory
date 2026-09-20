@@ -32,6 +32,13 @@ function update_game(localGameTable, dt)
     localGameTable.world:update(localGameTable,    dt)
     localGameTable.player:update(localGameTable,   dt)
 --  localGameTable.renderer:update(localGameTable, dt)
+
+    if localGameTable.game_state == "World" and not localGameTable.raylib.IsCursorHidden() then
+        --localGameTable.raylib.HideCursor()
+        localGameTable.raylib.DisableCursor()
+    elseif localGameTable.game_state ~= "World" and localGameTable.raylib.IsCursorHidden() then
+        localGameTable.raylib.EnableCursor()
+    end
 end
 
 function render_game(localGameTable, alpha)
