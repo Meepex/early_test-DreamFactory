@@ -16,8 +16,6 @@ function player_table:update(game_table, dt)
         self.enabled_statistics = not self.enabled_statistics  
     end
 
-    local a = true
-
     if self.enabled_statistics then
         game_table.renderer:add_to_2Drender_queue("player", {type = "statistics"})
     end
