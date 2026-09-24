@@ -19,7 +19,7 @@ function main()
 
     local camera = RAYLIB.Camera3D()
     camera.position = RAYLIB.Vector3({ 10.0, 2.0, 10.0 });
-    camera.target = RAYLIB.Vector3({ 0.0, 0.0, 0.0 });
+    --camera.target = RAYLIB.Vector3({ 0.0, 0.0, 0.0 });
     camera.up = RAYLIB.Vector3({ 0.0, 1.0, 0.0 });
     camera.fovy = 90.0;
     camera.projection = 0; --RAYLIB.CAMERA_PERSPECTIVE trust
