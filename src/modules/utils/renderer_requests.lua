@@ -14,9 +14,9 @@ function renderer_request.a3D.find_and_run(tasker, data, rendererContext)
 
             return true
         elseif data.type == "block" then
-            local pos, size = data.position, data.size
+            local pos, size, tint = data.position, data.size, data.tint or rendererContext.table.raylib.RED
 
-            rendererContext.table.raylib.DrawCube(pos, size.x, size.y, size.z, rendererContext.table.raylib.RED);
+            rendererContext.table.raylib.DrawCube(pos, size.x, size.y, size.z, tint);
             rendererContext.table.raylib.DrawCubeWires(pos, size.x, size.y, size.z, rendererContext.table.raylib.MAROON);
 
             return true

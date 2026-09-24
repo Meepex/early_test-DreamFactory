@@ -14,6 +14,7 @@ function world_table.init()
     return(meta)
 end
 
+--later we will make it actual blocks "Block.lua" in generics
 local function request_block(game_table, pos)
     game_table.renderer:add_to_3Drender_queue("world", {
         type = "block", 
