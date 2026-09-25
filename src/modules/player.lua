@@ -2,7 +2,6 @@ local player_table = {}
 player_table.__index = player_table
 player_table.__type  = "player_table"
 
-local GRAVITY = 20
 local JUMP_FORCE = 10
 local FLOOR = 2 --temp--
 
@@ -17,6 +16,10 @@ function player_table.init(camera)
     return(meta)
 end
 
+function player_table:standing_update(onGroup)
+    self.on_ground = onGroup
+end
+
 function player_table:update(game_table, dt)
     if game_table.raylib.IsKeyPressed(game_table.raylib.KEY_X) then
         self.enabled_statistics = not self.enabled_statistics  
@@ -28,9 +31,9 @@ function player_table:update(game_table, dt)
     end
 
     if not self.on_ground then
-        self.velocity_y = self.velocity_y - GRAVITY * dt
-        self.camera.position.y =
-            self.camera.position.y + self.velocity_y * dt
+        self.velocity_y = self.velocity_y - game_table.gravity * dt
+        self.camera.position.y = self.camera.position.y + self.velocity_y * dt
+        self.camera.target.y = self.camera.target.y + self.velocity_y * dt
     end
 
     if self.camera.position.y <= FLOOR then

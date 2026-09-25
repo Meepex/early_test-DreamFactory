@@ -15,6 +15,7 @@ function init_game(raylib, camera)
         renderer = nil,
 
         game_state = "World",
+        gravity = 20,
 
         raylib = nil
     }
