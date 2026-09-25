@@ -14,15 +14,6 @@ function world_table.init()
     return(meta)
 end
 
---later we will make it actual blocks "Block.lua" in generics
-local function request_block(game_table, pos)
-    game_table.renderer:add_to_3Drender_queue("world", {
-        type = "block", 
-        position = game_table.raylib.Vector3(pos),
-        size = game_table.raylib.Vector3({1, 1, 1})
-    })
-end
-
 function world_table:save_world()
     --EXPERIMENTAL.TODO("Implement converting world data to bytes")
 
@@ -61,7 +52,7 @@ function world_table:update(game_table, dt)
     for y = 1, 10, 1 do
         for x = -5, 5, 1 do
             for z = -5, 5, 1 do
-                request_block(game_table, {x, y, z})
+                game_table.renderer:add_to_3Drender_queue("world", {type = "block", position = {x, y, z}, size = {1, 1, 1}})
             end
         end
     end

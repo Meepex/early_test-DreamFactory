@@ -3,7 +3,6 @@ player_table.__index = player_table
 player_table.__type  = "player_table"
 
 local JUMP_FORCE = 10
-local FLOOR = 2 --temp--
 
 function player_table.init(camera)
     local meta = setmetatable({}, player_table)
@@ -36,8 +35,8 @@ function player_table:update(game_table, dt)
         self.camera.target.y = self.camera.target.y + self.velocity_y * dt
     end
 
-    if self.camera.position.y <= FLOOR then
-        self.camera.position.y = FLOOR
+    if self.camera.position.y <= game_table.player_collision_y then
+        self.camera.position.y = game_table.player_collision_y
         self.velocity_y = 0
         self.on_ground = true
     end

@@ -4,8 +4,9 @@ local GAME   = require("src.modules.game")
 function main()
     local screenWidth, screenHeight = rl.GetScreenWidth(), rl.GetScreenHeight()
 
+    rl.SetConfigFlags(rl.FLAG_MSAA_4X_HINT)
     rl.InitWindow(screenWidth, screenHeight, "test")
-    rl.SetWindowState(rl.FLAG_MSAA_4X_HINT|rl.FLAG_WINDOW_RESIZABLE)
+    rl.SetWindowState(rl.FLAG_WINDOW_RESIZABLE)
     rl.SetWindowTitle("Dream_Factory")
     --rl.ToggleFullscreen()
     
