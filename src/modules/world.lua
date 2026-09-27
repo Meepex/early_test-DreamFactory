@@ -52,7 +52,18 @@ function world_table:update(game_table, dt)
     for y = 1, 10, 1 do
         for x = -5, 5, 1 do
             for z = -5, 5, 1 do
-                game_table.renderer:add_to_3Drender_queue("world", {type = "block", position = {x, y, z}, size = {1, 1, 1}})
+                game_table.renderer:add_to_3Drender_queue("world", {
+                    type = "block_mesh",
+
+                    width = 1,
+                    height = 1,
+                    length = 1,
+
+                    position = {x, y, z},
+
+                    dynamic = false,
+
+                    })
             end
         end
     end

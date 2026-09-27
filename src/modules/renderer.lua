@@ -13,6 +13,8 @@ function renderer_table.init(game_table, camera)
     meta.render_2Dqueue = {}
     meta.table = game_table
 
+    RENDERER_REQUESTS.a3D.prepare(meta)
+
     return(meta)
 end
 
@@ -42,19 +44,19 @@ function renderer_table:render(dt)
         self.table.raylib.ClearBackground(self.table.raylib.RAYWHITE)
         if self.table.game_state == "World" then
             self.table.raylib.UpdateCamera(self.camera, 3); --CAMERA_FIRST_PERSON
-        else
-            self.table.raylib.UpdateCamera(self.camera, 1); --CAMERA_FREE
         end
 
         self.table.raylib.BeginMode3D(self.camera);
         do
-            for key=1, #self.render_3Dqueue do
+            if self.table.game_state == "World" then
+                for key=1, #self.render_3Dqueue do
                 local render_data  = self.render_3Dqueue[key]
                 local tasker, data = render_data.tasker, render_data.data
                 self.render_3Dqueue[key] = nil
                 --print(EXPERIMENTAL.format_output_message("INFO", "render", "Rendering task from "..tasker.."."))
 
                 RENDERER_REQUESTS["a3D"].find_and_run(tasker, data, self)
+                end
             end
         end
         self.table.raylib.EndMode3D();

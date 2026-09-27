@@ -6,6 +6,10 @@ function experimental_table.TODO(message)
     assert(false, "TODO:"..message)
 end
 
+function experimental_table.DEPRICATED(name)
+    print(name.." is depricated, please do not use.")
+end
+
 function experimental_table.format_output_message(level, source, message)
     return("["..level.."][DreamFactory->"..source.."] "..message)
 end
