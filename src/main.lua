@@ -16,7 +16,7 @@ function main()
         rl.UnloadImage(image)
     end
 
-    rl.SetTargetFPS(60)
+    --rl.SetTargetFPS(60)
 
     local camera = RAYLIB.Camera3D()
     camera.position = RAYLIB.Vector3({ 10.0, 2.0, 10.0 });

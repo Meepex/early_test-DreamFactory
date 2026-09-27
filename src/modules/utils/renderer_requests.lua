@@ -16,7 +16,7 @@ function renderer_request.a3D.find_and_run(tasker, data, rendererContext)
 
     if tasker == "world" then
         if data.type == "testing_place" then
-            EXPERIMENTAL.DEPRICATED("testing_place")
+            --EXPERIMENTAL.DEPRICATED("testing_place")
             --rl.DrawCube(rl.Vector3({0,0,0}), 2.0, 2.0, 2.0, rl.RED);
             --rl.DrawCubeWires(rl.Vector3({0,0,0}), 2.0, 2.0, 2.0, rl.MAROON);
 
@@ -45,6 +45,8 @@ function renderer_request.a3D.find_and_run(tasker, data, rendererContext)
             rl.DrawMesh(renderer_request.a3D.mesh_cube, material, rl.MatrixTranslate(x, y, z));
 
             return true
+        elseif data.type == "chunk_mesh" then
+                
         end
     end
 

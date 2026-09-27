@@ -1,6 +1,7 @@
-local WORLD    = require("src.modules.world")
-local PLAYER   = require("src.modules.player")
-local RENDERER = require("src.modules.renderer")
+local WORLD         = require("src.modules.world")
+local PLAYER        = require("src.modules.player")
+local RENDERER      = require("src.modules.renderer")
+local ASSET_MANAGER = require("src.modules.utils.asset_manager")
 
 local EXPERIMENTAL = require("src.modules.experimental.experimental")
 
@@ -10,18 +11,21 @@ function init_game(raylib, camera)
     local localGameTable = {
         __type = GAME_TYPE,
 
-        world    = nil,
-        player   = nil,
-        renderer = nil,
+        asset_manager = nil,
+        world         = nil,
+        player        = nil,
+        renderer      = nil,
 
-        game_state = "Menu",
-        gravity = 20,
+        game_state         = "World",
+        gravity            = 20,
         player_collision_y = 2,
 
         raylib = nil
     }
 
-    localGameTable.raylib   = raylib
+    localGameTable.raylib = raylib
+
+    localGameTable.asset_manager = ASSET_MANAGER.init(localGameTable)
 
     localGameTable.world    = WORLD.init()
     localGameTable.player   = PLAYER.init(camera)
