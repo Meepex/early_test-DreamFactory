@@ -47,26 +47,18 @@ function world_table:save_world()
 end
 
 function world_table:update(game_table, dt)
-    game_table.renderer:add_to_3Drender_queue("world", {type = "testing_place"})
+    --game_table.renderer:add_to_3Drender_queue("world", {type = "testing_place"})
 
     for y = 1, 10, 1 do
         for x = -5, 5, 1 do
             for z = -5, 5, 1 do
                 game_table.renderer:add_to_3Drender_queue("world", {
                     type = "block_mesh",
-
-                    width = 1,
-                    height = 1,
-                    length = 1,
-
                     position = {x, y, z},
-
-                    dynamic = false,
-
-                    })
+                })
             end
         end
     end
 end
 
-return(world_table)
+return world_table

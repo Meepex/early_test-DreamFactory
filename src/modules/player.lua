@@ -15,39 +15,59 @@ function player_table.init(camera)
     return(meta)
 end
 
+function process_input(playerContext, game_table)
+    if game_table.raylib.IsKeyPressed(game_table.raylib.KEY_X) then
+        playerContext.enabled_statistics = not playerContext.enabled_statistics  
+    end
+
+    if playerContext.on_ground and rl.IsKeyPressed(rl.KEY_SPACE) and game_table.game_state == "World" then
+        playerContext.velocity_y = JUMP_FORCE
+        playerContext.on_ground = false
+    end
+end
+
+function process_gravity(playerContext, game_table, dt)
+    if playerContext.camera.position.y > game_table.player_collision_y then
+        playerContext.on_ground = false
+    end
+
+    if not playerContext.on_ground then
+        local velocity = playerContext.velocity_y - game_table.gravity * dt
+
+        --Limit max Y velocity to 20 or -20
+        if math.abs(velocity) >= 20 then
+            velocity = velocity < 0 and -20 or 20
+        end
+
+        playerContext.velocity_y = velocity
+        playerContext.camera.position.y = playerContext.camera.position.y + playerContext.velocity_y * dt
+        playerContext.camera.target.y = playerContext.camera.target.y + playerContext.velocity_y * dt
+    end
+
+    if playerContext.camera.position.y <= game_table.player_collision_y then
+        playerContext.camera.position.y = game_table.player_collision_y
+        playerContext.velocity_y = 0
+        playerContext.on_ground = true
+    end
+end
+
+function process_statistics(playerContext, game_table)
+    if playerContext.enabled_statistics then
+        game_table.renderer:add_to_2Drender_queue("player", {type = "statistics"})
+    end
+end
+
 function player_table:standing_update(onGroup)
     self.on_ground = onGroup
 end
 
 function player_table:update(game_table, dt)
-    if game_table.game_state ~= "World" then
-        
-    else
-        if self.on_ground and rl.IsKeyPressed(rl.KEY_SPACE) then
-            self.velocity_y = JUMP_FORCE
-            self.on_ground = false
-        end
+    process_input(self, game_table)
 
-        if not self.on_ground then
-            self.velocity_y = self.velocity_y - game_table.gravity * dt
-            self.camera.position.y = self.camera.position.y + self.velocity_y * dt
-            self.camera.target.y = self.camera.target.y + self.velocity_y * dt
-        end
-
-        if self.camera.position.y <= game_table.player_collision_y then
-            self.camera.position.y = game_table.player_collision_y
-            self.velocity_y = 0
-            self.on_ground = true
-        end
-    end
-
-    if game_table.raylib.IsKeyPressed(game_table.raylib.KEY_X) then
-            self.enabled_statistics = not self.enabled_statistics  
-        end
-
-    if self.enabled_statistics then
-        game_table.renderer:add_to_2Drender_queue("player", {type = "statistics"})
-    end
+    --Other proccesses
+    process_gravity(self, game_table, dt)
+    process_statistics(self, game_table)
+    
 end
 
 return(player_table)

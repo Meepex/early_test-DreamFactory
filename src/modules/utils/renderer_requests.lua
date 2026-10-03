@@ -9,6 +9,7 @@ function renderer_request.a3D.prepare(rendererContext)
     local mesh = rl.GenMeshCube(1, 1, 1)
     rl.UploadMesh(mesh, false);
     renderer_request.a3D.mesh_cube = mesh
+    renderer_request.a3D.default_mat = rl.LoadMaterialDefault()
 end
 
 function renderer_request.a3D.find_and_run(tasker, data, rendererContext)
@@ -16,13 +17,11 @@ function renderer_request.a3D.find_and_run(tasker, data, rendererContext)
 
     if tasker == "world" then
         if data.type == "testing_place" then
-            --EXPERIMENTAL.DEPRICATED("testing_place")
-            --rl.DrawCube(rl.Vector3({0,0,0}), 2.0, 2.0, 2.0, rl.RED);
-            --rl.DrawCubeWires(rl.Vector3({0,0,0}), 2.0, 2.0, 2.0, rl.MAROON);
-
-            rl.DrawGrid(500, 1);
-
+            EXPERIMENTAL.DEPRICATED("testing_place")
             return true
+            --rl.DrawGrid(500, 1);
+
+            
         elseif data.type == "block" then
             local pos, size, tint = rl.Vector3(data.position), rl.Vector3(data.size), data.tint or rl.RED
 
@@ -38,15 +37,15 @@ function renderer_request.a3D.find_and_run(tasker, data, rendererContext)
             local x, y, z = data.position[1], data.position[2], data.position[3]
             local material = data.material
 
-            if not material or not rl.IsMaterialValid(material) then
-                material = rl.LoadMaterialDefault()
+            if not material then
+                material = renderer_request.a3D.default_mat
             end
 
             rl.DrawMesh(renderer_request.a3D.mesh_cube, material, rl.MatrixTranslate(x, y, z));
 
             return true
         elseif data.type == "chunk_mesh" then
-                
+            EXPERIMENTAL.TODO("chunk_mesh")
         end
     end
 
